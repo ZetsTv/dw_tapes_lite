@@ -1,0 +1,25 @@
+Locales = Locales or {}
+
+Locales['de'] = {
+    help_point_a   = '~INPUT_CONTEXT~ Startpunkt setzen~n~~INPUT_AIM~ / ~INPUT_FRONTEND_RRIGHT~ Abbrechen',
+    help_point_b   = '~INPUT_CONTEXT~ Endpunkt setzen~n~~INPUT_AIM~ Startpunkt zurücksetzen~n~~INPUT_FRONTEND_RRIGHT~ Abbrechen',
+    help_remove    = '~INPUT_DETONATE~ Absperrband aufnehmen',
+    target_remove  = 'Absperrband aufnehmen',
+    too_far        = 'Zu weit entfernt',
+    too_long       = 'Zu lang',
+    too_short      = 'Zu kurz',
+    no_los         = 'Weg blockiert',
+    cancelled      = 'Platzieren abgebrochen.',
+    placed         = 'Absperrband platziert.',
+    removed        = 'Absperrband aufgenommen.',
+    no_permission  = 'Dafür bist du nicht berechtigt.',
+    no_item        = 'Du hast kein passendes Absperrband dabei.',
+    limit_player   = 'Du hast bereits zu viele Absperrbänder platziert.',
+    limit_total    = 'Es sind bereits zu viele Absperrbänder auf dem Server.',
+    in_vehicle     = 'Nicht im Fahrzeug möglich.',
+    inventory_full = 'Kein Platz im Inventar – das Band wurde entsorgt.',
+    invalid        = 'Ungültige Position.',
+    unknown_type   = 'Unbekannter Typ. Verfügbar: %s',
+    cleared        = '%d Absperrbänder entfernt.',
+    loaded         = '%d Absperrbänder geladen.',
+}

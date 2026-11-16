@@ -1,0 +1,25 @@
+Locales = Locales or {}
+
+Locales['en'] = {
+    help_point_a   = '~INPUT_CONTEXT~ Set start point~n~~INPUT_AIM~ / ~INPUT_FRONTEND_RRIGHT~ Cancel',
+    help_point_b   = '~INPUT_CONTEXT~ Set end point~n~~INPUT_AIM~ Reset start point~n~~INPUT_FRONTEND_RRIGHT~ Cancel',
+    help_remove    = '~INPUT_DETONATE~ Pick up tape',
+    target_remove  = 'Pick up tape',
+    too_far        = 'Too far away',
+    too_long       = 'Too long',
+    too_short      = 'Too short',
+    no_los         = 'Path blocked',
+    cancelled      = 'Placement cancelled.',
+    placed         = 'Tape placed.',
+    removed        = 'Tape picked up.',
+    no_permission  = 'You are not allowed to do that.',
+    no_item        = "You don't have the matching tape.",
+    limit_player   = 'You have already placed too many tapes.',
+    limit_total    = 'There are already too many tapes on the server.',
+    in_vehicle     = 'Not possible inside a vehicle.',
+    inventory_full = 'No space in your inventory – the tape was discarded.',
+    invalid        = 'Invalid position.',
+    unknown_type   = 'Unknown type. Available: %s',
+    cleared        = '%d tapes removed.',
+    loaded         = '%d tapes loaded.',
+}
