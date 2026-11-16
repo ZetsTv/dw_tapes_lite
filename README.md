@@ -15,7 +15,7 @@ Free police, crime scene, caution, fire and EMS tape for FiveM – placed in sec
 
 🇩🇪 Deutsche Version: [README.de.md](README.de.md)
 
-<p align="center"><img src=".github/assets/banner.png" alt="DW Tapes Lite" width="100%"></p>
+<p align="center"><img src=".github/assets/hero.png" alt="DW Tapes Lite" width="100%"></p>
 
 ## Features
 
