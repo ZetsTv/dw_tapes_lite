@@ -45,13 +45,13 @@ body:
     id: inventory
     attributes:
       label: Inventory
-      options: [ox_inventory, qb-inventory, ESX default inventory, other, none]
+      options: [ox_inventory, qb-inventory, ESX default inventory, other, no inventory]
     validations:
       required: true
   - type: dropdown
     id: target
     attributes:
       label: Target
-      options: [ox_target, qb-target, qtarget, none (G key)]
+      options: [ox_target, qb-target, qtarget, no target (G key)]
     validations:
       required: true
