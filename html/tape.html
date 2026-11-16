@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body { margin: 0; padding: 0; width: 1024px; height: 64px; overflow: hidden; background: #000; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<canvas id="c" width="1024" height="64"></canvas>
+<script>
+(function () {
+    var q = new URLSearchParams(location.search);
+    var W = 1024, H = 64;
+    var ctx = document.getElementById('c').getContext('2d');
+
+    function shade() {
+        var g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, 'rgba(255,255,255,0.16)');
+        g.addColorStop(0.5, 'rgba(255,255,255,0)');
+        g.addColorStop(1, 'rgba(0,0,0,0.22)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+    }
+
+    // Diagonal stripes, period 128px -> 1024/128 = 8 so the tile repeats seamlessly
+    function stripes() {
+        var c1 = q.get('c1') || '#d41f1f', c2 = q.get('c2') || '#ffffff';
+        ctx.fillStyle = c2;
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = c1;
+        var period = 128, half = period / 2;
+        for (var x = -H - period; x < W + period; x += period) {
+            ctx.beginPath();
+            ctx.moveTo(x, H);
+            ctx.lineTo(x + half, H);
+            ctx.lineTo(x + half + H, 0);
+            ctx.lineTo(x + H, 0);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    function text() {
+        var bg = q.get('bg') || '#f5c400';
+        var fg = q.get('fg') || '#111111';
+        var border = q.get('border');
+        var label = q.get('text') || '';
+
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+
+        if (border) {
+            ctx.fillStyle = border;
+            ctx.fillRect(0, 4, W, 4);
+            ctx.fillRect(0, H - 8, W, 4);
+        }
+
+        var size = Math.round(H * 0.46);
+        ctx.fillStyle = fg;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 ' + size + 'px "Arial Black", "Segoe UI Black", Impact, Arial, sans-serif';
+
+        var maxW = W - 90;
+        var w = ctx.measureText(label).width;
+        ctx.save();
+        ctx.translate(W / 2, H / 2 + 1);
+        if (w > maxW) ctx.scale(maxW / w, 1);
+        ctx.fillText(label, 0, 0);
+        ctx.restore();
+
+        // Separator exactly on the tile edge -> continuous pattern when repeated
+        ctx.font = '900 ' + Math.round(size * 0.8) + 'px Arial, sans-serif';
+        ctx.fillText('•', 0, H / 2 + 1);
+        ctx.fillText('•', W, H / 2 + 1);
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        if ((q.get('style') || 'text') === 'stripes') stripes(); else text();
+        shade();
+    }
+
+    draw();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>
