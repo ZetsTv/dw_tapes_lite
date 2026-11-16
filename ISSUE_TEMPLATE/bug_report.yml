@@ -1,0 +1,57 @@
+name: Bug report
+description: Something does not work as described
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting! Please fill in as much as you can, it makes fixing much faster.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Use police_tape
+        2. Aim at the ground ...
+    validations:
+      required: true
+  - type: textarea
+    id: errors
+    attributes:
+      label: Errors
+      description: Copy errors from the F8 console and the server console.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: dw_tapes_lite version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options: [qbx_core, qb-core, ESX Legacy, older ESX, standalone]
+    validations:
+      required: true
+  - type: dropdown
+    id: inventory
+    attributes:
+      label: Inventory
+      options: [ox_inventory, qb-inventory, ESX default inventory, other, none]
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      options: [ox_target, qb-target, qtarget, none (G key)]
+    validations:
+      required: true

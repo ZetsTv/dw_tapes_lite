@@ -1,0 +1,14 @@
+name: Feature request
+description: An idea for the Lite version
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Rope physics, tape rolls, vehicle anchors, NPC traffic and more are part of the full version DW Tapes.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: What should the script do and why would it help your server?
+    validations:
+      required: true

@@ -1,0 +1,39 @@
+# Builds dw_tapes_lite-<version>.zip (folder dw_tapes_lite/, without .github and git files)
+# and attaches it to every published GitHub release. Tag format: v1.0.0
+name: Release zip
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          MANIFEST=$(sed -n "s/^version '\(.*\)'/\1/p" fxmanifest.lua)
+          if [ "$TAG" != "$MANIFEST" ]; then
+            echo "::warning::Tag ${GITHUB_REF_NAME} does not match fxmanifest.lua version ${MANIFEST}"
+          fi
+
+      - name: Build zip
+        id: build
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          mkdir -p ../build/dw_tapes_lite
+          rsync -a --exclude '.git*' --exclude 'tapes.json' ./ ../build/dw_tapes_lite/
+          cd ../build
+          zip -rq "dw_tapes_lite-${VERSION}.zip" dw_tapes_lite
+          echo "file=$(pwd)/dw_tapes_lite-${VERSION}.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Attach to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.build.outputs.file }}
