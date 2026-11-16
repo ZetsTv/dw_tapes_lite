@@ -1,4 +1,4 @@
-![DW Tapes Lite](https://raw.githubusercontent.com/GITHUB_USER/dw_tapes_lite/main/.github/assets/banner.png)
+![DW Tapes Lite](https://github.com/ZetsTv/dw_tapes_lite/blob/main/.github/assets/banner.png)
 
 First release of **DW Tapes Lite** – free police, crime scene, caution, fire and EMS tape for FiveM.
 
@@ -13,7 +13,7 @@ First release of **DW Tapes Lite** – free police, crime scene, caution, fire a
 - English and German, item images included
 
 ### Installation
-Download **`dw_tapes_lite-1.0.0.zip`** below, put the `dw_tapes_lite` folder into your `resources/` and follow the [README](https://github.com/GITHUB_USER/dw_tapes_lite#installation).
+Download **`dw_tapes_lite-1.0.0.zip`** below, put the `dw_tapes_lite` folder into your `resources/` and follow the [README](https://github.com/ZetsTv/dw_tapes_lite#installation).
 
 ### Want more?
-The full version **DW Tapes** adds rope physics, lifting, tearing, tape rolls, chain mode, vehicle anchors, cutting, NPC traffic that stops, an admin menu and Discord logs – with the same item names, so you keep your tapes when you upgrade: FULL_URL
+The full version **DW Tapes** adds rope physics, lifting, tearing, tape rolls, chain mode, vehicle anchors, cutting, NPC traffic that stops, an admin menu and Discord logs – with the same item names, so you keep your tapes when you upgrade: https://store.dreamworksrp.de/package/tapes
