@@ -26,6 +26,10 @@ Config.Command      = { enabled = true, name = 'tape', ace = 'dw_tapes.command' 
 Config.AdminCommand = { name = 'cleartapes', ace = 'dw_tapes.admin' }             -- /cleartapes [radius]
 Config.BypassAce    = 'dw_tapes.bypass'                                           -- ignore jobs and player limit
 
+-- Whoever placed a tape may always pick it up again, whatever removeJobs says.
+-- Needed for /tape: it places any type without item and without job check.
+Config.OwnerCanRemove = true
+
 Config.Placement = {
     reach              = 6.0,   -- max. distance player -> point
     minLength          = 1.0,
