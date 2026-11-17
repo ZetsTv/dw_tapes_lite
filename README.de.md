@@ -39,7 +39,7 @@ Police Tape, Crime Scene Tape, Caution Tape, Fire Line, EMS Tape, Flatterband (r
 | Routing-Bucket-Unterstützung | – | ✅ |
 | Absperrständer mit Gurt | – | ✅ |
 
-Vollversion **DW Tapes**: [store.dreamworksrp.de](https://store.dreamworksrp.de)
+Vollversion **DW Tapes**: [store.dreamworksrp.de](https://store.dreamworksrp.de/products/tapes)
 
 Fragen und Support: [Discord](https://discord.gg/xEGmNP7vmF) · Fehler und Ideen: [Issues](../../issues)
 
@@ -63,6 +63,7 @@ Fragen und Support: [Discord](https://discord.gg/xEGmNP7vmF) · Fehler und Ideen
    add_ace group.admin dw_tapes.command allow   # /tape <typ> ohne Item
    add_ace group.admin dw_tapes.bypass allow    # Job-Rechte und Limit ignorieren
    ```
+   `/tape` überspringt beim Platzieren die Job-Prüfung. Wer ein Band gesetzt hat, kann es immer wieder aufnehmen (`Config.OwnerCanRemove`).
 
 ## Steuerung
 
@@ -89,4 +90,4 @@ Item-Namen, ACE-Rechte und die Speicherdatei sind gleich:
 
 ## Lizenz
 
-Kostenlos nutzbar, nicht verkäuflich. Siehe [LICENSE](LICENSE).
+[MIT](LICENSE) – frei nutzbar, veränderbar und weitergebbar. Bitte den Copyright-Hinweis behalten und auf dieses Repository verlinken.
