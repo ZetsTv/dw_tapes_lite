@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.1 – 2026-11-17
+
+- The text on the tape was mirrored on one side, now it reads correctly from both sides
+- Target zone now covers the whole tape (box zone): aim at the tape, a cone or the ground below it.
+  Before, the small spheres at the ends and in the middle were hard to hit, especially on cones
+- Whoever placed a tape can always pick it up again (`Config.OwnerCanRemove`). Before, a tape placed with
+  `/tape` could not be removed by the same player without the matching job
+- Players with `dw_tapes.bypass` could place every tape but did not see "Pick up tape" when the framework granted
+  the ACE after joining (e.g. group.admin on character load). ACE changes now reach the client within 5 seconds
+
+Updating from 1.0.0: replace the files, keep your `tapes.json`. Your old `config.lua` keeps working.
+
 ## 1.0.0 – 2026-11-16
 
 First release of the free Lite version.
