@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-c1121f?style=flat-square" alt="Version 1.0.0">
+  <img src="https://img.shields.io/badge/version-1.0.1-c1121f?style=flat-square" alt="Version 1.0.1">
   <img src="https://img.shields.io/badge/price-free-3ddc84?style=flat-square" alt="Free">
   <img src="https://img.shields.io/badge/QBCore%20%C2%B7%20Qbox%20%C2%B7%20ESX%20%C2%B7%20Standalone-151518?style=flat-square" alt="QBCore, Qbox, ESX, Standalone">
   <img src="https://img.shields.io/badge/lang-EN%20%C2%B7%20DE-151518?style=flat-square" alt="English and German">
@@ -63,6 +63,7 @@ Everything is detected automatically (`'auto'`). No required dependencies.
    add_ace group.admin dw_tapes.command allow   # /tape <type> without item
    add_ace group.admin dw_tapes.bypass allow    # ignore job permissions and player limit
    ```
+   `/tape` skips the job check for placing. Whoever placed a tape can always pick it up again (`Config.OwnerCanRemove`).
 
 > **Note:** the folder must be called `dw_tapes_lite`. With ox_inventory the items call the export `dw_tapes_lite.useTape`.
 
@@ -121,6 +122,6 @@ Item names, ACE permissions and the save file are the same:
 
 ## License
 
-Free to use and modify on your own servers. Selling it or re-uploading it elsewhere is not allowed. See [LICENSE](LICENSE).
+[MIT](LICENSE) – free to use, modify and share. Please keep the copyright notice and link back to this repository.
 
 <sub>Dreamworks Development // DW Tapes Lite</sub>
