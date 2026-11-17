@@ -78,8 +78,17 @@ end
 -- current draw parameters (upvalues instead of many function arguments)
 local cr, cg, cb, ca, cdict, cname = 255, 255, 255, 255, '', ''
 
+local camX, camY, camZ = 0.0, 0.0, 0.0
+
 -- One tape piece from (a) to (b), w = half width as vector, visible from both sides
 local function Quad(ax, ay, az, bx, by, bz, wx, wy, wz, ua, ub)
+    -- The text reads correctly when seen from the side of (b - a) x w. Seen from the other
+    -- side it would be mirrored -> run u the other way, so both sides look the same.
+    local dx, dy, dz = bx - ax, by - ay, bz - az
+    local nx, ny, nz = dy * wz - dz * wy, dz * wx - dx * wz, dx * wy - dy * wx
+    if (camX - ax) * nx + (camY - ay) * ny + (camZ - az) * nz < 0.0 then
+        ua, ub = 1.0 - ua, 1.0 - ub
+    end
     local a1x, a1y, a1z = ax - wx, ay - wy, az - wz
     local a2x, a2y, a2z = ax + wx, ay + wy, az + wz
     local b1x, b1y, b1z = bx - wx, by - wy, bz - wz
@@ -103,6 +112,8 @@ end
 ]]
 function Render.DrawRibbon(pos, count, nx, ny, width, tex, skip, r, g, b, a)
     cr, cg, cb, ca, cdict, cname = r, g, b, a, tex.dict, tex.name
+    local cam = GetFinalRenderedCamCoord()
+    camX, camY, camZ = cam.x, cam.y, cam.z
     local half = width * 0.5
     local rep = width * RATIO
     local s = 0.0
