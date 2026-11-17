@@ -111,6 +111,7 @@ local function GetPostHeight()
 end
 
 local function CanRemove(tape)
+    if Config.OwnerCanRemove ~= false and tape.own and tape.own == CB.OwnerTag then return true end
     return CB.HasJob(tape.def.removeJobs)
 end
 
@@ -137,17 +138,31 @@ end
 -- Target
 -- ============================================================
 
+--[[
+    One flat box along the whole tape, from below the ground up to just above the tape.
+    Target scripts only check where the aim ray ends: the tape itself has no collision, so the
+    ray ends on the cone or the ground below / next to the tape - both are inside the box.
+]]
+local TARGET_WIDTH, TARGET_MARGIN = 0.9, 0.8
+
 local function AddTarget(tape)
     if CB.Target == 'none' then return end
-    local s = tape.sim
-    local points = { tape.a, tape.b, s.pos[floor(s.count / 2) + 1] }
+    local a, b = tape.a, tape.b
+    local top = math.max(a.z, b.z) + 0.3
+    local bottom = math.min(a.z, b.z) - 1.3
+    local dx, dy = b.x - a.x, b.y - a.y
+    local center = vector3((a.x + b.x) * 0.5, (a.y + b.y) * 0.5, (top + bottom) * 0.5)
+    local length = math.sqrt(dx * dx + dy * dy) + TARGET_MARGIN
+    local heading = GetHeadingFromVector_2d(dx, dy)
     tape.zones = {}
 
-    for k, p in ipairs(points) do
+    do
+        local k = 1
         if CB.Target == 'ox_target' then
-            tape.zones[k] = exports.ox_target:addSphereZone({
-                coords = p,
-                radius = 0.5,
+            tape.zones[k] = exports.ox_target:addBoxZone({
+                coords = center,
+                size = vector3(TARGET_WIDTH, length, top - bottom),
+                rotation = heading,
                 debug = Config.Debug,
                 options = { {
                     name = 'dw_tapes_lite_remove',
@@ -160,7 +175,9 @@ local function AddTarget(tape)
             })
         else -- qb-target and qtarget share the same zone API
             local name = ('dw_tapes_lite_%s_%s'):format(tape.id, k)
-            exports[CB.Target]:AddCircleZone(name, p, 0.5, { name = name, debugPoly = Config.Debug, useZ = true }, {
+            exports[CB.Target]:AddBoxZone(name, center, length, TARGET_WIDTH, {
+                name = name, heading = heading, debugPoly = Config.Debug, minZ = bottom, maxZ = top,
+            }, {
                 options = { {
                     icon = 'fas fa-hand-paper',
                     label = L.target_remove,
@@ -522,8 +539,13 @@ exports('useTape', function(data)
 end)
 exports('startPlacement', function(tapeType) StartPlacement(tapeType) end)
 
-RegisterNetEvent('dw_tapes_lite:client:sync', function(list, bypass)
+RegisterNetEvent('dw_tapes_lite:client:perms', function(bypass)
     CB.Bypass = bypass == true
+end)
+
+RegisterNetEvent('dw_tapes_lite:client:sync', function(list, bypass, ownerTag)
+    CB.Bypass = bypass == true
+    CB.OwnerTag = ownerTag
     for _, tape in pairs(Tapes) do StreamOut(tape) end
     Tapes = {}
     for _, data in ipairs(list) do
