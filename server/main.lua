@@ -12,8 +12,19 @@ local function Notify(src, msg, kind)
     TriggerClientEvent('dw_tapes_lite:client:notify', src, msg, kind)
 end
 
+-- clients only get a salted hash of the owner, never the identifier itself
+local ownerSalt = ('%d:%d'):format(math.random(1, 0x3FFFFFFF), os.time())
+local function OwnerTag(owner)
+    return owner and GetHashKey(ownerSalt .. owner) or nil
+end
+
+local function OwnsTape(src, tape)
+    if Config.OwnerCanRemove == false or not tape.owner then return false end
+    return tape.owner == SB.Identifier(src)
+end
+
 local function ToClient(t)
-    return { id = t.id, type = t.type, a = t.a, b = t.b, postA = t.postA, postB = t.postB }
+    return { id = t.id, type = t.type, a = t.a, b = t.b, postA = t.postA, postB = t.postB, own = OwnerTag(t.owner) }
 end
 
 local function VecToTbl(v) return v and { x = v.x, y = v.y, z = v.z } or nil end
@@ -87,9 +98,30 @@ AddEventHandler('onResourceStop', function(res)
     if res == RES then Save() end
 end)
 
+-- Bypass ACE as the client knows it. Frameworks often grant group.admin only when the character
+-- loads, after the first sync -> changes are pushed, otherwise the client hides "remove" for admins.
+local bypassSent = {}
+local function SendPerms(src)
+    local bypass = IsPlayerAceAllowed(src, Config.BypassAce)
+    if bypassSent[src] ~= bypass then
+        bypassSent[src] = bypass
+        TriggerClientEvent('dw_tapes_lite:client:perms', src, bypass)
+    end
+end
+
+CreateThread(function()
+    while true do
+        Wait(5000)
+        for src in pairs(bypassSent) do
+            if GetPlayerName(src) then SendPerms(src) else bypassSent[src] = nil end
+        end
+    end
+end)
+
 AddEventHandler('playerDropped', function()
     cooldown[source] = nil
     freeUse[source] = nil
+    bypassSent[source] = nil
 end)
 
 -- ============================================================
@@ -100,6 +132,7 @@ CreateThread(function()
     Wait(500)
     for tapeType in pairs(Config.Tapes) do
         SB.RegisterUsable(tapeType, function(src)
+            SendPerms(src)
             TriggerClientEvent('dw_tapes_lite:client:use', src, tapeType)
         end)
     end
@@ -146,7 +179,9 @@ end, false)
 RegisterNetEvent('dw_tapes_lite:server:requestSync', function()
     local list = {}
     for _, t in pairs(tapes) do list[#list + 1] = ToClient(t) end
-    TriggerClientEvent('dw_tapes_lite:client:sync', source, list, IsPlayerAceAllowed(source, Config.BypassAce))
+    local bypass = IsPlayerAceAllowed(source, Config.BypassAce)
+    bypassSent[source] = bypass
+    TriggerClientEvent('dw_tapes_lite:client:sync', source, list, bypass, OwnerTag(SB.Identifier(source)))
 end)
 
 local function ValidPost(post, anchor)
@@ -217,7 +252,10 @@ RegisterNetEvent('dw_tapes_lite:server:remove', function(id)
     if DistToSegment(pp, tape.a, tape.b) > 4.0 then return end
 
     local def = Config.Tapes[tape.type]
-    if def and not SB.HasJob(src, def.removeJobs) then return Notify(src, L.no_permission, 'error') end
+    -- whoever placed it may always pick it up again (also tapes placed with /tape)
+    if def and not SB.HasJob(src, def.removeJobs) and not OwnsTape(src, tape) then
+        return Notify(src, L.no_permission, 'error')
+    end
 
     RemoveTape(id)
 
