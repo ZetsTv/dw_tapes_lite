@@ -122,6 +122,6 @@ Item names, ACE permissions and the save file are the same:
 
 ## License
 
-[MIT](LICENSE) – free to use, modify and share. Please keep the copyright notice and link back to this repository.
+[GNU GPLv3](LICENSE) – free to use, modify and share. Please keep the copyright notice and link back to this repository.
 
 <sub>Dreamworks Development // DW Tapes Lite</sub>
