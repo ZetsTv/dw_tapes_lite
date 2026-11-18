@@ -90,4 +90,4 @@ Item-Namen, ACE-Rechte und die Speicherdatei sind gleich:
 
 ## Lizenz
 
-[MIT](LICENSE) – frei nutzbar, veränderbar und weitergebbar. Bitte den Copyright-Hinweis behalten und auf dieses Repository verlinken.
+[GNU GPLv3](LICENSE) – frei nutzbar, veränderbar und weitergebbar. Bitte den Copyright-Hinweis behalten und auf dieses Repository verlinken.
